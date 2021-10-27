@@ -1,0 +1,91 @@
+{
+    "settings": {
+        "number_of_shards" : 1,
+        "number_of_replicas" : 0,
+        "analysis" : {
+            "analyzer" : {
+                "tweet_analyzer" : {
+                    "type" : "custom",
+                    "tokenizer" : "standard",
+                    "char_filter" : ["symb_filter", "digit_filter", "punct_filter", "links_filter"],
+                    "filter" : ["lowercase", "english_stop", "porter_stem"]
+                },
+                "synonym" : {
+                    "tokenizer" : "standard",
+                    "filter" : ["lowercase", "syn_wordnet"]
+                }
+            },
+            "normalizer": {
+                "tweet_normalizer": {
+                    "type" : "custom",
+                    "filter" : ["lowercase"]
+                }
+            },
+            "char_filter" : {
+                "symb_filter" : {
+                    "type" : "pattern_replace",
+                    "pattern" : "[\\Q—’’’-”“\\E]",
+                    "replacement" : " "
+                },
+                "digit_filter" : {
+                    "type" : "pattern_replace",
+                    "pattern" : "\\d+"
+                },
+                "punct_filter" : {
+                    "type" : "pattern_replace",
+                    "pattern" : "\\p{Punct}"
+                },
+                "links_filter" : {
+                    "type" : "pattern_replace",
+                    "pattern" : "http\\S+"
+                }
+            },
+            "filter" : {
+                "english_stop" : {
+                    "type": "stop", 
+                    "stopwords" : "_english_"
+                },
+                "syn_wordnet" : {
+                    "type" : "synonym",
+                    "format" : "wordnet",
+                    "synonyms_path" : "wn_s.pl",
+                    "updateable" : "true"
+                }
+            }
+        }
+    },
+    "mappings": {
+        "dynamic" : "strict",
+        "properties" : {
+            "user_name" : {
+                "type" : "text",
+                "analyzer" : "standard",
+                "similarity" : "boolean"
+            },
+            "screen_name" : {
+                "type" : "keyword",
+                "normalizer" : "tweet_normalizer",
+                "similarity" : "boolean"
+            },
+            "date": {
+                "type" : "date",
+                "format" : "EEE MMM dd HH:mm:ss Z yyyy"
+            },
+            "tweet_id" : {
+                "type" : "keyword"
+            },
+            "text" : {
+                "type" : "text",
+                "analyzer" : "tweet_analyzer",
+                "search_analyzer" : "tweet_analyzer",
+                "similarity" : "BM25"
+            },
+            "hashtags" : {
+                "type" : "keyword",
+                "ignore_above" : 256,
+                "normalizer" : "tweet_normalizer",
+                "similarity" : "boolean"
+            }
+        }
+    }
+}

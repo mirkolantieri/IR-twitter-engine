@@ -1,0 +1,46 @@
+## Enter here, without line comment, the twitter usernames of the users from which extract the tweets
+
+## User groups for user profile extraction
+## Group one - scientists
+# neiltyson
+# astrokatie
+# profbriancox
+
+## Group two - politicians
+# BarackObama
+# SpeakerPelosi
+# JoeBiden
+
+## News accounts
+## Various news
+WSJ
+BBCWorld
+USATODAY
+nytimes
+washingtonpost
+HuffPost
+WashTimes
+FoxNews
+theblaze
+
+## Scientifics news
+NatureNews
+newscientist
+NewsfromScience
+NatGeo
+
+## Sport news
+YahooSports
+FOXSports
+cnnsport
+
+## Tech news
+engadget
+WIRED
+technology
+
+## Business and financial news
+WSJecon
+FT
+Forbes
+ReutersBiz
